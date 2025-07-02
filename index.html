@@ -6,102 +6,150 @@
     <title>팻머스 여름휴가 일정</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-       /* 기본 스타일 */
+     /* 진짜 반응형 - 스크롤 없이 화면에 맞춤 */
 .calendar-container {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    width: 100%;
 }
 
-/* 모바일 대응 강화 */
+/* 모바일 최적화 - 화면에 딱 맞춤 */
 @media (max-width: 768px) {
-    .calendar-grid {
-        gap: 1px;
-        min-width: 800px; /* 가로 스크롤 허용하면서 충분한 너비 확보 */
-    }
-    
-    .day-cell {
-        min-height: 160px; /* 높이 증가 */
-        min-width: 110px; /* 너비 증가 */
-        padding: 6px;
-        font-size: 12px;
-    }
-    
-    .vacation-bar {
-        font-size: 9px; /* 폰트 크기 증가 */
-        padding: 3px 5px; /* 패딩 증가 */
-        margin-bottom: 2px;
-        white-space: nowrap; /* 텍스트 줄바꿈 방지 */
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-    
-    .day-number {
-        font-size: 14px; /* 날짜 숫자 크기 증가 */
-        font-weight: bold;
-    }
-    
-    /* 요일 헤더도 크기 증가 */
-    .weekday-header {
-        min-width: 110px;
-        padding: 8px 4px;
-        font-size: 14px;
-        font-weight: bold;
-    }
-    
-    /* 범례 텍스트 크기 조정 */
-    .legend-item {
-        font-size: 11px;
-        margin: 2px;
-    }
-    
-    /* 스크롤 힌트 추가 */
-    .scroll-hint {
-        text-align: center;
-        color: #6b7280;
-        font-size: 12px;
-        margin-bottom: 8px;
-        display: block;
-    }
-}
-
-/* 태블릿 */
-@media (min-width: 769px) and (max-width: 1024px) {
-    .day-cell {
-        min-height: 150px;
+    /* 전체 패딩 줄이기 */
+    .main-container {
         padding: 8px;
     }
     
-    .vacation-bar {
+    /* 캘린더 그리드 */
+    .calendar-grid {
+        gap: 1px;
+        width: 100%;
+    }
+    
+    /* 각 날짜 셀 */
+    .day-cell {
+        height: 80px; /* 높이를 작게 */
+        padding: 2px;
+        font-size: 8px;
+        overflow: hidden;
+    }
+    
+    /* 날짜 숫자 */
+    .day-number {
         font-size: 10px;
-        padding: 3px 6px;
+        font-weight: bold;
+        margin-bottom: 2px;
+    }
+    
+    /* 휴가 막대 */
+    .vacation-bar {
+        font-size: 7px; /* 작은 폰트 */
+        padding: 1px 2px;
+        margin-bottom: 1px;
+        line-height: 1.1;
+        height: 12px;
+        display: flex;
+        align-items: center;
+    }
+    
+    /* 요일 헤더 */
+    .weekday-header {
+        padding: 4px 2px;
+        font-size: 11px;
+        font-weight: bold;
+    }
+    
+    /* 제목 크기 조정 */
+    .main-title {
+        font-size: 20px;
+        margin-bottom: 8px;
+    }
+    
+    .calendar-title {
+        font-size: 16px;
+    }
+    
+    /* 범례 최적화 */
+    .legend-container {
+        margin-bottom: 12px;
+    }
+    
+    .legend-grid {
+        gap: 4px;
+    }
+    
+    .legend-item {
+        font-size: 9px;
+        margin: 1px;
+    }
+    
+    .legend-color {
+        width: 8px;
+        height: 8px;
+    }
+    
+    /* 버튼 크기 조정 */
+    .month-button {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+    
+    /* 통계 영역 */
+    .stats-container {
+        margin-top: 12px;
+    }
+    
+    .stats-grid {
+        gap: 8px;
+    }
+    
+    .stat-box {
+        padding: 8px;
+    }
+    
+    .stat-number {
+        font-size: 16px;
+    }
+    
+    .stat-label {
+        font-size: 10px;
+    }
+    
+    /* 휴가 목록 */
+    .vacation-list {
+        max-height: 120px;
+        font-size: 10px;
+    }
+    
+    /* 이름만 표시 (일수는 숨김) */
+    .vacation-duration {
+        display: none;
+    }
+    
+    /* 더 많은 사람이 있을 때 표시 */
+    .overflow-count {
+        font-size: 6px;
+        margin-top: 1px;
     }
 }
 
-/* 스크롤바 스타일링 */
-.calendar-container::-webkit-scrollbar {
-    height: 8px;
-}
-
-.calendar-container::-webkit-scrollbar-track {
-    background: #f1f5f9;
-    border-radius: 4px;
-}
-
-.calendar-container::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 4px;
-}
-
-.calendar-container::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
+/* 중간 크기 화면 */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .day-cell {
+        height: 120px;
+        padding: 4px;
+    }
+    
+    .vacation-bar {
+        font-size: 9px;
+        padding: 2px 4px;
+    }
 }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
-    <div class="max-w-7xl mx-auto p-4 sm:p-6">
+    <div class="main-container max-w-7xl mx-auto p-4 sm:p-6">
         <!-- 헤더 -->
         <div class="mb-6 sm:mb-8 text-center">
-            <h1 class="text-2xl sm:text-4xl font-bold text-gray-800 mb-2">🌴 팻머스 여름휴가 일정</h1>
+            <h1 class="main-title text-2xl sm:text-4xl font-bold text-gray-800 mb-2">🌴 팻머스 여름휴가 일정</h1>
             <p class="text-sm sm:text-base text-gray-600">2025년 7월 - 8월 휴가 현황</p>
             <div class="mt-4 flex items-center justify-center">
                 <div class="w-4 h-4 bg-green-500 rounded-full mr-2"></div>
@@ -111,58 +159,56 @@
 
         <!-- 월 선택 버튼 -->
         <div class="flex items-center justify-center mb-6">
-            <button id="btn-july" class="px-4 py-2 mx-2 rounded-lg font-semibold transition-colors bg-blue-500 text-white">
+            <button id="btn-july" class="month-button px-4 py-2 mx-2 rounded-lg font-semibold transition-colors bg-blue-500 text-white">
                 7월
             </button>
-            <button id="btn-august" class="px-4 py-2 mx-2 rounded-lg font-semibold transition-colors bg-white text-gray-700 hover:bg-gray-100">
+            <button id="btn-august" class="month-button px-4 py-2 mx-2 rounded-lg font-semibold transition-colors bg-white text-gray-700 hover:bg-gray-100">
                 8월
             </button>
         </div>
 
         <!-- 범례 -->
-        <div class="mb-6">
+        <div class="legend-container mb-6">
             <div class="text-center mb-3">
                 <h4 class="text-sm font-semibold text-gray-700 mb-2">팀원별 색상</h4>
-                <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs">
-                    <div class="flex items-center"><div class="w-3 h-3 bg-pink-500 rounded mr-1"></div><span>한혜미</span></div>
-                    <div class="flex items-center"><div class="w-3 h-3 bg-blue-500 rounded mr-1"></div><span>박지원</span></div>
-                    <div class="flex items-center"><div class="w-3 h-3 bg-green-500 rounded mr-1"></div><span>신선영</span></div>
-                    <div class="flex items-center"><div class="w-3 h-3 bg-purple-500 rounded mr-1"></div><span>김수경</span></div>
-                    <div class="flex items-center"><div class="w-3 h-3 bg-yellow-500 rounded mr-1"></div><span>김새록</span></div>
-                    <div class="flex items-center"><div class="w-3 h-3 bg-indigo-500 rounded mr-1"></div><span>이형노</span></div>
-                    <div class="flex items-center"><div class="w-3 h-3 bg-red-500 rounded mr-1"></div><span>김다애</span></div>
-                    <div class="flex items-center"><div class="w-3 h-3 bg-teal-500 rounded mr-1"></div><span>안호영</span></div>
-                    <div class="flex items-center"><div class="w-3 h-3 bg-orange-500 rounded mr-1"></div><span>이예은</span></div>
-                    <div class="flex items-center"><div class="w-3 h-3 bg-amber-500 rounded mr-1"></div><span>김명진</span></div>
-                    <div class="flex items-center"><div class="w-3 h-3 bg-lime-500 rounded mr-1"></div><span>정지수</span></div>
-                    <div class="flex items-center"><div class="w-3 h-3 bg-fuchsia-500 rounded mr-1"></div><span>조슬기</span></div>
+                <div class="legend-grid flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs">
+                    <div class="legend-item flex items-center"><div class="legend-color w-3 h-3 bg-pink-500 rounded mr-1"></div><span>한혜미</span></div>
+                    <div class="legend-item flex items-center"><div class="legend-color w-3 h-3 bg-blue-500 rounded mr-1"></div><span>박지원</span></div>
+                    <div class="legend-item flex items-center"><div class="legend-color w-3 h-3 bg-green-500 rounded mr-1"></div><span>신선영</span></div>
+                    <div class="legend-item flex items-center"><div class="legend-color w-3 h-3 bg-purple-500 rounded mr-1"></div><span>김수경</span></div>
+                    <div class="legend-item flex items-center"><div class="legend-color w-3 h-3 bg-yellow-500 rounded mr-1"></div><span>김새록</span></div>
+                    <div class="legend-item flex items-center"><div class="legend-color w-3 h-3 bg-indigo-500 rounded mr-1"></div><span>이형노</span></div>
+                    <div class="legend-item flex items-center"><div class="legend-color w-3 h-3 bg-red-500 rounded mr-1"></div><span>김다애</span></div>
+                    <div class="legend-item flex items-center"><div class="legend-color w-3 h-3 bg-teal-500 rounded mr-1"></div><span>안호영</span></div>
+                    <div class="legend-item flex items-center"><div class="legend-color w-3 h-3 bg-orange-500 rounded mr-1"></div><span>이예은</span></div>
+                    <div class="legend-item flex items-center"><div class="legend-color w-3 h-3 bg-amber-500 rounded mr-1"></div><span>김명진</span></div>
+                    <div class="legend-item flex items-center"><div class="legend-color w-3 h-3 bg-lime-500 rounded mr-1"></div><span>정지수</span></div>
+                    <div class="legend-item flex items-center"><div class="legend-color w-3 h-3 bg-fuchsia-500 rounded mr-1"></div><span>조슬기</span></div>
                 </div>
             </div>
         </div>
 
-     <!-- 캘린더 컨테이너 -->
-<div class="calendar-container">
-    <!-- 모바일 스크롤 힌트 -->
-    <div class="scroll-hint block sm:hidden">← 좌우로 스크롤하세요 →</div>
-    <div id="calendar" class="bg-white rounded-lg shadow-lg p-4 sm:p-6">
-        <div class="text-center py-8">로딩 중...</div>
-    </div>
-</div>
+        <!-- 캘린더 컨테이너 -->
+        <div class="calendar-container">
+            <div id="calendar" class="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+                <div class="text-center py-8">로딩 중...</div>
+            </div>
+        </div>
 
         <!-- 통계 -->
-        <div class="mt-6 sm:mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="stats-container mt-6 sm:mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div class="bg-white rounded-lg shadow-lg p-4 sm:p-6">
                 <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-4">이달의 휴가 통계</h3>
-                <div id="stats" class="grid grid-cols-3 gap-4"></div>
+                <div id="stats" class="stats-grid grid grid-cols-3 gap-4"></div>
             </div>
             
             <div class="bg-white rounded-lg shadow-lg p-4 sm:p-6">
                 <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-4">전체 휴가 목록</h3>
-                <div id="vacation-list" class="max-h-64 overflow-y-auto space-y-2"></div>
+                <div id="vacation-list" class="vacation-list max-h-64 overflow-y-auto space-y-2"></div>
             </div>
         </div>
     </div>
-
+    <!-- JavaScript는 동일 -->
     <script>
         // 휴가 데이터
         const vacationData = {
@@ -241,41 +287,39 @@
         }
 
         function renderVacationBar(vacation) {
-            if (vacation.type === 'spacer') {
-                return '<div class="vacation-bar" style="min-height: 16px;"></div>';
-            }
-            
-            const color = colorMap[vacation.name] || 'bg-gray-500';
-            const textColor = 'text-white';
-            
-            let cornerClass = '';
-            let borderClass = '';
-            
-            if (vacation.duration > 1) {
-                if (vacation.isStart && vacation.isEnd) {
-                    cornerClass = 'rounded';
-                } else if (vacation.isStart) {
-                    cornerClass = 'rounded-l';
-                    borderClass = 'border-r border-white border-opacity-30';
-                } else if (vacation.isEnd) {
-                    cornerClass = 'rounded-r';
-                    borderClass = 'border-l border-white border-opacity-30';
-                } else {
-                    borderClass = 'border-l border-r border-white border-opacity-30';
-                }
-            } else {
-                cornerClass = 'rounded';
-            }
-            
-            const displayText = vacation.isStart && vacation.duration > 1 
-                ? `${vacation.name}(${vacation.duration}일)` 
-                : vacation.duration === 1 
-                    ? vacation.name 
-                    : '';
-            
-            return `<div class="vacation-bar ${color} ${cornerClass} ${textColor} ${borderClass} truncate" style="min-height: 16px; font-size: 9px; padding: 2px 4px; margin-bottom: 1px;" title="${vacation.name} - ${vacation.type} (${vacation.duration}일)">${displayText}</div>`;
+    if (vacation.type === 'spacer') {
+        return '<div class="vacation-bar" style="min-height: 12px;"></div>';
+    }
+    
+    const color = colorMap[vacation.name] || 'bg-gray-500';
+    const textColor = 'text-white';
+    
+    let cornerClass = '';
+    let borderClass = '';
+    
+    if (vacation.duration > 1) {
+        if (vacation.isStart && vacation.isEnd) {
+            cornerClass = 'rounded';
+        } else if (vacation.isStart) {
+            cornerClass = 'rounded-l';
+            borderClass = 'border-r border-white border-opacity-30';
+        } else if (vacation.isEnd) {
+            cornerClass = 'rounded-r';
+            borderClass = 'border-l border-white border-opacity-30';
+        } else {
+            borderClass = 'border-l border-r border-white border-opacity-30';
         }
-
+    } else {
+        cornerClass = 'rounded';
+    }
+    
+    // 모바일에서는 이름만, 데스크톱에서는 일수 포함
+    const displayText = vacation.isStart && vacation.duration > 1 
+        ? `<span class="hidden sm:inline">${vacation.name}(${vacation.duration}일)</span><span class="sm:hidden">${vacation.name}</span>` 
+        : vacation.name;
+    
+    return `<div class="vacation-bar ${color} ${cornerClass} ${textColor} ${borderClass} truncate" title="${vacation.name} - ${vacation.type} (${vacation.duration}일)">${displayText}</div>`;
+}
         function renderCalendar() {
             const year = 2025;
             const days = getCalendarDays(year, currentMonth);
