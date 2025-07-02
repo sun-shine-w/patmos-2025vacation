@@ -6,13 +6,95 @@
     <title>팻머스 여름휴가 일정</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @media (max-width: 768px) {
-            .calendar-grid { gap: 1px; }
-            .day-cell { min-height: 120px; padding: 4px; }
-            .vacation-bar { font-size: 8px; padding: 2px 4px; margin-bottom: 1px; }
-            .day-number { font-size: 12px; }
-            .calendar-container { overflow-x: auto; min-width: 100%; }
-        }
+       /* 기본 스타일 */
+.calendar-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* 모바일 대응 강화 */
+@media (max-width: 768px) {
+    .calendar-grid {
+        gap: 1px;
+        min-width: 800px; /* 가로 스크롤 허용하면서 충분한 너비 확보 */
+    }
+    
+    .day-cell {
+        min-height: 160px; /* 높이 증가 */
+        min-width: 110px; /* 너비 증가 */
+        padding: 6px;
+        font-size: 12px;
+    }
+    
+    .vacation-bar {
+        font-size: 9px; /* 폰트 크기 증가 */
+        padding: 3px 5px; /* 패딩 증가 */
+        margin-bottom: 2px;
+        white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .day-number {
+        font-size: 14px; /* 날짜 숫자 크기 증가 */
+        font-weight: bold;
+    }
+    
+    /* 요일 헤더도 크기 증가 */
+    .weekday-header {
+        min-width: 110px;
+        padding: 8px 4px;
+        font-size: 14px;
+        font-weight: bold;
+    }
+    
+    /* 범례 텍스트 크기 조정 */
+    .legend-item {
+        font-size: 11px;
+        margin: 2px;
+    }
+    
+    /* 스크롤 힌트 추가 */
+    .scroll-hint {
+        text-align: center;
+        color: #6b7280;
+        font-size: 12px;
+        margin-bottom: 8px;
+        display: block;
+    }
+}
+
+/* 태블릿 */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .day-cell {
+        min-height: 150px;
+        padding: 8px;
+    }
+    
+    .vacation-bar {
+        font-size: 10px;
+        padding: 3px 6px;
+    }
+}
+
+/* 스크롤바 스타일링 */
+.calendar-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.calendar-container::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 4px;
+}
+
+.calendar-container::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+.calendar-container::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
@@ -58,12 +140,14 @@
             </div>
         </div>
 
-        <!-- 캘린더 컨테이너 -->
-        <div class="calendar-container">
-            <div id="calendar" class="bg-white rounded-lg shadow-lg p-4 sm:p-6">
-                <div class="text-center py-8">로딩 중...</div>
-            </div>
-        </div>
+     <!-- 캘린더 컨테이너 -->
+<div class="calendar-container">
+    <!-- 모바일 스크롤 힌트 -->
+    <div class="scroll-hint block sm:hidden">← 좌우로 스크롤하세요 →</div>
+    <div id="calendar" class="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+        <div class="text-center py-8">로딩 중...</div>
+    </div>
+</div>
 
         <!-- 통계 -->
         <div class="mt-6 sm:mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -201,8 +285,8 @@
                     <h2 class="text-xl sm:text-2xl font-bold text-gray-800">${year}년 ${months[currentMonth]}</h2>
                 </div>
                 <div class="grid grid-cols-7 gap-1 mb-2">
-                    ${weekdays.map((day, index) => `<div class="p-2 sm:p-3 text-center font-semibold ${index === 0 ? 'text-red-500' : index === 6 ? 'text-blue-500' : 'text-gray-700'}">${day}</div>`).join('')}
-                </div>
+    ${weekdays.map((day, index) => `<div class="weekday-header p-2 sm:p-3 text-center font-semibold ${index === 0 ? 'text-red-500' : index === 6 ? 'text-blue-500' : 'text-gray-700'}">${day}</div>`).join('')}
+</div>
                 <div class="calendar-grid grid grid-cols-7 gap-1">
                     ${days.map((dayObj, index) => {
                         if (dayObj === null) {
