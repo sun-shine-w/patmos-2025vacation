@@ -16,6 +16,407 @@
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
-    <!-- 위에서 만든 HTML 코드 전체를 여기에 복사 -->
+    <!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>팻머스 여름휴가 일정</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 모바일 대응 추가 스타일 */
+        @media (max-width: 768px) {
+            .calendar-grid {
+                gap: 1px;
+            }
+            .day-cell {
+                min-height: 120px;
+                padding: 4px;
+            }
+            .vacation-bar {
+                font-size: 8px;
+                padding: 2px 4px;
+                margin-bottom: 1px;
+            }
+            .day-number {
+                font-size: 12px;
+            }
+            .calendar-container {
+                overflow-x: auto;
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="max-w-7xl mx-auto p-4 sm:p-6">
+        <!-- 헤더 -->
+        <div class="mb-6 sm:mb-8 text-center">
+            <h1 class="text-2xl sm:text-4xl font-bold text-gray-800 mb-2">🌴 팻머스 여름휴가 일정</h1>
+            <p class="text-sm sm:text-base text-gray-600">2025년 7월 - 8월 휴가 현황</p>
+            <div class="mt-4 flex items-center justify-center">
+                <div class="w-4 h-4 bg-green-500 rounded-full mr-2"></div>
+                <span class="text-green-700 font-semibold text-sm">실제 데이터 적용 완료</span>
+            </div>
+        </div>
+
+        <!-- 월 선택 버튼 -->
+        <div class="flex items-center justify-center mb-6">
+            <button id="btn-july" class="px-4 py-2 mx-2 rounded-lg font-semibold transition-colors bg-blue-500 text-white">
+                7월
+            </button>
+            <button id="btn-august" class="px-4 py-2 mx-2 rounded-lg font-semibold transition-colors bg-white text-gray-700 hover:bg-gray-100">
+                8월
+            </button>
+        </div>
+
+        <!-- 범례 -->
+        <div class="mb-6">
+            <div class="text-center mb-3">
+                <h4 class="text-sm font-semibold text-gray-700 mb-2">팀원별 색상</h4>
+                <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs">
+                    <div class="flex items-center"><div class="w-3 h-3 bg-pink-500 rounded mr-1"></div><span>한혜미</span></div>
+                    <div class="flex items-center"><div class="w-3 h-3 bg-blue-500 rounded mr-1"></div><span>박지원</span></div>
+                    <div class="flex items-center"><div class="w-3 h-3 bg-green-500 rounded mr-1"></div><span>신선영</span></div>
+                    <div class="flex items-center"><div class="w-3 h-3 bg-purple-500 rounded mr-1"></div><span>김수경</span></div>
+                    <div class="flex items-center"><div class="w-3 h-3 bg-yellow-500 rounded mr-1"></div><span>김새록</span></div>
+                    <div class="flex items-center"><div class="w-3 h-3 bg-indigo-500 rounded mr-1"></div><span>이형노</span></div>
+                    <div class="flex items-center"><div class="w-3 h-3 bg-red-500 rounded mr-1"></div><span>김다애</span></div>
+                    <div class="flex items-center"><div class="w-3 h-3 bg-teal-500 rounded mr-1"></div><span>안호영</span></div>
+                    <div class="flex items-center"><div class="w-3 h-3 bg-orange-500 rounded mr-1"></div><span>이예은</span></div>
+                    <div class="flex items-center"><div class="w-3 h-3 bg-amber-500 rounded mr-1"></div><span>김명진</span></div>
+                    <div class="flex items-center"><div class="w-3 h-3 bg-lime-500 rounded mr-1"></div><span>정지수</span></div>
+                    <div class="flex items-center"><div class="w-3 h-3 bg-fuchsia-500 rounded mr-1"></div><span>조슬기</span></div>
+                </div>
+            </div>
+            <div class="flex items-center justify-center space-x-4 sm:space-x-6 text-sm">
+                <div class="flex items-center">
+                    <div class="w-4 h-4 bg-red-50 border border-red-200 rounded mr-2"></div>
+                    <span>주말/휴일</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="flex">
+                        <div class="w-2 h-4 bg-blue-500 rounded-l"></div>
+                        <div class="w-2 h-4 bg-blue-500 border-l border-white border-opacity-30"></div>
+                        <div class="w-2 h-4 bg-blue-500 rounded-r border-l border-white border-opacity-30"></div>
+                    </div>
+                    <span class="ml-2">연속 휴가</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 캘린더 컨테이너 -->
+        <div class="calendar-container">
+            <div id="calendar" class="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+                <!-- 캘린더 내용이 여기에 동적으로 생성됩니다 -->
+            </div>
+        </div>
+
+        <!-- 통계 -->
+        <div class="mt-6 sm:mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+                <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-4">이달의 휴가 통계</h3>
+                <div id="stats" class="grid grid-cols-3 gap-4">
+                    <!-- 통계가 여기에 동적으로 생성됩니다 -->
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+                <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-4">전체 휴가 목록</h3>
+                <div id="vacation-list" class="max-h-64 overflow-y-auto space-y-2">
+                    <!-- 휴가 목록이 여기에 동적으로 생성됩니다 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 휴가 데이터
+        const vacationData = {
+            "2025-06-30": [{"name": "한혜미", "type": "연차", "duration": 3, "isStart": true, "isEnd": false, "groupId": "한혜미-0"}],
+            "2025-07-01": [{"name": "한혜미", "type": "연차", "duration": 3, "isStart": false, "isEnd": false, "groupId": "한혜미-0"}],
+            "2025-07-02": [{"name": "한혜미", "type": "연차", "duration": 3, "isStart": false, "isEnd": true, "groupId": "한혜미-0"}],
+            "2025-07-10": [{"name": "김수경", "type": "연차", "duration": 2, "isStart": true, "isEnd": false, "groupId": "김수경-0"}],
+            "2025-07-11": [{"name": "김수경", "type": "연차", "duration": 2, "isStart": false, "isEnd": true, "groupId": "김수경-0"}],
+            "2025-07-21": [{"name": "신선영", "type": "연차", "duration": 2, "isStart": true, "isEnd": false, "groupId": "신선영-0"}],
+            "2025-07-22": [{"name": "신선영", "type": "연차", "duration": 2, "isStart": false, "isEnd": true, "groupId": "신선영-0"}],
+            "2025-07-24": [{"name": "박지원", "type": "연차", "duration": 2, "isStart": true, "isEnd": false, "groupId": "박지원-0"}],
+            "2025-07-25": [{"name": "박지원", "type": "연차", "duration": 2, "isStart": false, "isEnd": true, "groupId": "박지원-0"}],
+            "2025-08-07": [{"name": "박지원", "type": "연차", "duration": 2, "isStart": true, "isEnd": false, "groupId": "박지원-1"}],
+            "2025-08-08": [{"name": "박지원", "type": "연차", "duration": 2, "isStart": false, "isEnd": true, "groupId": "박지원-1"}, {"name": "안호영", "type": "연차", "duration": 3, "isStart": true, "isEnd": false, "groupId": "안호영-0"}, {"name": "정지수", "type": "연차", "duration": 1, "isStart": true, "isEnd": true, "groupId": "정지수-0"}],
+            "2025-08-11": [{"name": "김명진", "type": "연차", "duration": 3, "isStart": true, "isEnd": false, "groupId": "김명진-0"}, {"name": "안호영", "type": "연차", "duration": 3, "isStart": false, "isEnd": false, "groupId": "안호영-0"}, {"name": "김다애", "type": "연차", "duration": 2, "isStart": true, "isEnd": false, "groupId": "김다애-0"}],
+            "2025-08-12": [{"name": "김명진", "type": "연차", "duration": 3, "isStart": false, "isEnd": false, "groupId": "김명진-0"}, {"name": "안호영", "type": "연차", "duration": 3, "isStart": false, "isEnd": true, "groupId": "안호영-0"}, {"name": "김다애", "type": "연차", "duration": 2, "isStart": false, "isEnd": true, "groupId": "김다애-0"}],
+            "2025-08-13": [{"name": "김명진", "type": "연차", "duration": 3, "isStart": false, "isEnd": true, "groupId": "김명진-0"}, {"name": "김새록", "type": "연차", "duration": 2, "isStart": true, "isEnd": false, "groupId": "김새록-0"}],
+            "2025-08-14": [{"name": "", "type": "spacer", "duration": 1, "isStart": true, "isEnd": true, "groupId": "spacer-27"}, {"name": "김새록", "type": "연차", "duration": 2, "isStart": false, "isEnd": true, "groupId": "김새록-0"}, {"name": "박지원", "type": "연차", "duration": 1, "isStart": true, "isEnd": true, "groupId": "박지원-2"}, {"name": "김수경", "type": "연차", "duration": 1, "isStart": true, "isEnd": true, "groupId": "김수경-1"}, {"name": "이형노", "type": "연차", "duration": 1, "isStart": true, "isEnd": true, "groupId": "이형노-0"}, {"name": "조슬기", "type": "연차", "duration": 2, "isStart": true, "isEnd": false, "groupId": "조슬기-0"}],
+            "2025-08-18": [{"name": "김수경", "type": "연차", "duration": 2, "isStart": true, "isEnd": false, "groupId": "김수경-2"}, {"name": "", "type": "spacer", "duration": 1, "isStart": true, "isEnd": true, "groupId": "spacer-28"}, {"name": "", "type": "spacer", "duration": 1, "isStart": true, "isEnd": true, "groupId": "spacer-29"}, {"name": "", "type": "spacer", "duration": 1, "isStart": true, "isEnd": true, "groupId": "spacer-30"}, {"name": "", "type": "spacer", "duration": 1, "isStart": true, "isEnd": true, "groupId": "spacer-31"}, {"name": "조슬기", "type": "연차", "duration": 2, "isStart": false, "isEnd": true, "groupId": "조슬기-0"}],
+            "2025-08-19": [{"name": "김수경", "type": "연차", "duration": 2, "isStart": false, "isEnd": true, "groupId": "김수경-2"}],
+            "2025-08-20": [{"name": "정지수", "type": "연차", "duration": 3, "isStart": true, "isEnd": false, "groupId": "정지수-1"}, {"name": "신선영", "type": "연차", "duration": 3, "isStart": true, "isEnd": false, "groupId": "신선영-1"}],
+            "2025-08-21": [{"name": "정지수", "type": "연차", "duration": 3, "isStart": false, "isEnd": false, "groupId": "정지수-1"}, {"name": "신선영", "type": "연차", "duration": 3, "isStart": false, "isEnd": false, "groupId": "신선영-1"}, {"name": "김명진", "type": "연차", "duration": 2, "isStart": true, "isEnd": false, "groupId": "김명진-1"}, {"name": "이형노", "type": "연차", "duration": 2, "isStart": true, "isEnd": false, "groupId": "이형노-1"}],
+            "2025-08-22": [{"name": "정지수", "type": "연차", "duration": 3, "isStart": false, "isEnd": true, "groupId": "정지수-1"}, {"name": "신선영", "type": "연차", "duration": 3, "isStart": false, "isEnd": true, "groupId": "신선영-1"}, {"name": "김명진", "type": "연차", "duration": 2, "isStart": false, "isEnd": true, "groupId": "김명진-1"}, {"name": "이형노", "type": "연차", "duration": 2, "isStart": false, "isEnd": true, "groupId": "이형노-1"}],
+            "2025-08-25": [{"name": "김다애", "type": "연차", "duration": 2, "isStart": true, "isEnd": false, "groupId": "김다애-1"}, {"name": "안호영", "type": "연차", "duration": 2, "isStart": true, "isEnd": false, "groupId": "안호영-1"}, {"name": "이예은", "type": "연차", "duration": 2, "isStart": true, "isEnd": false, "groupId": "이예은-0"}],
+            "2025-08-26": [{"name": "김다애", "type": "연차", "duration": 2, "isStart": false, "isEnd": true, "groupId": "김다애-1"}, {"name": "안호영", "type": "연차", "duration": 2, "isStart": false, "isEnd": true, "groupId": "안호영-1"}, {"name": "이예은", "type": "연차", "duration": 2, "isStart": false, "isEnd": true, "groupId": "이예은-0"}],
+            "2025-08-29": [{"name": "이예은", "type": "연차", "duration": 1, "isStart": true, "isEnd": true, "groupId": "이예은-1"}, {"name": "조슬기", "type": "연차", "duration": 1, "isStart": true, "isEnd": true, "groupId": "조슬기-1"}]
+        };
+
+        const colorMap = {
+            '한혜미': 'bg-pink-500', '박지원': 'bg-blue-500', '신선영': 'bg-green-500',
+            '김수경': 'bg-purple-500', '김새록': 'bg-yellow-500', '이형노': 'bg-indigo-500',
+            '김다애': 'bg-red-500', '안호영': 'bg-teal-500', '이예은': 'bg-orange-500',
+            '김명진': 'bg-amber-500', '정지수': 'bg-lime-500', '조슬기': 'bg-fuchsia-500'
+        };
+
+        let currentMonth = 6; // 7월
+        const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
+        const months = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
+
+        function getCalendarDays(year, month) {
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const daysInMonth = lastDay.getDate();
+            const startingDayOfWeek = firstDay.getDay();
+            
+            const days = [];
+            
+            if (month === 6) {
+                days.push(null);
+                days.push({ day: 30, month: 5, isCurrentMonth: false });
+            } else {
+                for (let i = 0; i < startingDayOfWeek; i++) {
+                    days.push(null);
+                }
+            }
+            
+            for (let day = 1; day <= daysInMonth; day++) {
+                days.push({ day, month, isCurrentMonth: true });
+            }
+            
+            return days;
+        }
+
+        function formatDate(year, month, day) {
+            return `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        }
+
+        function getVacationsForDate(year, month, day) {
+            const dateStr = formatDate(year, month, day);
+            return vacationData[dateStr] || [];
+        }
+
+        function isHoliday(year, month, day) {
+            const dateStr = formatDate(year, month, day);
+            return dateStr === '2025-08-15';
+        }
+
+        function renderVacationBar(vacation) {
+            if (vacation.type === 'spacer') {
+                return '<div class="vacation-bar" style="min-height: 16px;"></div>';
+            }
+            
+            const color = colorMap[vacation.name] || 'bg-gray-500';
+            const textColor = 'text-white';
+            
+            let cornerClass = '';
+            let borderClass = '';
+            
+            if (vacation.duration > 1) {
+                if (vacation.isStart && vacation.isEnd) {
+                    cornerClass = 'rounded';
+                } else if (vacation.isStart) {
+                    cornerClass = 'rounded-l';
+                    borderClass = 'border-r border-white border-opacity-30';
+                } else if (vacation.isEnd) {
+                    cornerClass = 'rounded-r';
+                    borderClass = 'border-l border-white border-opacity-30';
+                } else {
+                    borderClass = 'border-l border-r border-white border-opacity-30';
+                }
+            } else {
+                cornerClass = 'rounded';
+            }
+            
+            const displayText = vacation.isStart && vacation.duration > 1 
+                ? `${vacation.name}(${vacation.duration}일)` 
+                : vacation.duration === 1 
+                    ? vacation.name 
+                    : '';
+            
+            return `
+                <div class="vacation-bar ${color} ${cornerClass} ${textColor} ${borderClass} truncate" 
+                     style="min-height: 16px; font-size: 9px; padding: 2px 4px; margin-bottom: 1px;"
+                     title="${vacation.name} - ${vacation.type} (${vacation.duration}일)">
+                    ${displayText}
+                </div>
+            `;
+        }
+
+        function renderCalendar() {
+            const year = 2025;
+            const days = getCalendarDays(year, currentMonth);
+            
+            let calendarHTML = `
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-xl sm:text-2xl font-bold text-gray-800">
+                        ${year}년 ${months[currentMonth]}
+                    </h2>
+                </div>
+                
+                <div class="grid grid-cols-7 gap-1 mb-2">
+                    ${weekdays.map((day, index) => `
+                        <div class="p-2 sm:p-3 text-center font-semibold ${
+                            index === 0 ? 'text-red-500' : index === 6 ? 'text-blue-500' : 'text-gray-700'
+                        }">
+                            ${day}
+                        </div>
+                    `).join('')}
+                </div>
+                
+                <div class="calendar-grid grid grid-cols-7 gap-1">
+                    ${days.map((dayObj, index) => {
+                        if (dayObj === null) {
+                            return '<div class="day-cell p-2 sm:p-2" style="height: 140px;"></div>';
+                        }
+                        
+                        const day = dayObj.day;
+                        const dayMonth = dayObj.month;
+                        const isCurrentMonth = dayObj.isCurrentMonth;
+                        
+                        const actualYear = year;
+                        const actualMonth = isCurrentMonth ? currentMonth : dayMonth;
+                        
+                        const isWeekend = index % 7 === 0 || index % 7 === 6;
+                        const holiday = isHoliday(actualYear, actualMonth, day);
+                        
+                        const vacations = (isWeekend || holiday) ? [] : getVacationsForDate(actualYear, actualMonth, day);
+                        
+                        return `
+                            <div class="day-cell p-2 sm:p-2 border border-gray-200 relative ${
+                                isWeekend || holiday ? 'bg-red-50' : 
+                                !isCurrentMonth ? 'bg-gray-100' : 'bg-white'
+                            }" style="height: 140px;">
+                                <div class="day-number text-sm font-semibold mb-1 ${
+                                    isWeekend || holiday ? 'text-red-600' : 
+                                    !isCurrentMonth ? 'text-gray-400' : 'text-gray-700'
+                                }">
+                                    ${day}
+                                </div>
+                                
+                                ${vacations.length > 0 ? `
+                                    <div class="space-y-0.5">
+                                        ${vacations.slice(0, 6).map(vacation => renderVacationBar(vacation)).join('')}
+                                        ${vacations.length > 6 ? `
+                                            <div class="text-xs text-gray-500 mt-1">
+                                                +${vacations.length - 6}명
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                ` : ''}
+                                
+                                ${holiday ? `
+                                    <div class="absolute top-1 right-1 text-xs text-red-600 font-bold">
+                                        휴
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+            
+            document.getElementById('calendar').innerHTML = calendarHTML;
+        }
+
+        function updateStats() {
+            const monthStart = `2025-${String(currentMonth + 1).padStart(2, '0')}-01`;
+            const monthEnd = `2025-${String(currentMonth + 1).padStart(2, '0')}-31`;
+            
+            const monthVacations = Object.entries(vacationData)
+                .filter(([date, _]) => date >= monthStart && date <= monthEnd)
+                .filter(([date, _]) => {
+                    const dateObj = new Date(date);
+                    const dayOfWeek = dateObj.getDay();
+                    const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+                    const [year, month, day] = date.split('-').map(Number);
+                    const isHoliday = (month === 8 && day === 15);
+                    return !isWeekend && !isHoliday;
+                })
+                .flatMap(([_, vacations]) => vacations)
+                .filter(v => v.type !== 'spacer');
+            
+            const annualLeave = monthVacations.filter(v => v.type === '연차').length;
+            const halfDayLeave = monthVacations.filter(v => v.type === '반차').length;
+            const uniqueUsers = new Set(monthVacations.map(v => v.name).filter(name => name !== '')).size;
+            
+            document.getElementById('stats').innerHTML = `
+                <div class="bg-blue-50 p-4 rounded-lg text-center">
+                    <div class="text-xl sm:text-2xl font-bold text-blue-600">${annualLeave}건</div>
+                    <div class="text-blue-700">연차</div>
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg text-center">
+                    <div class="text-xl sm:text-2xl font-bold text-green-600">${halfDayLeave}건</div>
+                    <div class="text-green-700">반차</div>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg text-center">
+                    <div class="text-xl sm:text-2xl font-bold text-gray-600">${uniqueUsers}명</div>
+                    <div class="text-gray-700">휴가 사용자</div>
+                </div>
+            `;
+        }
+
+        function updateVacationList() {
+            const allVacations = [];
+            Object.entries(vacationData).forEach(([date, vacations]) => {
+                vacations.forEach(vacation => {
+                    if (vacation.isStart && vacation.type !== 'spacer') {
+                        allVacations.push({
+                            name: vacation.name,
+                            startDate: date,
+                            duration: vacation.duration,
+                            type: vacation.type
+                        });
+                    }
+                });
+            });
+            allVacations.sort((a, b) => a.startDate.localeCompare(b.startDate));
+            
+            document.getElementById('vacation-list').innerHTML = allVacations.map(vacation => `
+                <div class="flex items-center justify-between py-2 px-3 bg-gray-50 rounded">
+                    <div class="flex items-center">
+                        <span class="font-medium">${vacation.name}</span>
+                    </div>
+                    <div class="text-sm text-gray-600">
+                        ${vacation.startDate.substring(5).replace('-', '/')} 
+                        ${vacation.duration > 1 ? ` (${vacation.duration}일)` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function switchMonth(month) {
+            currentMonth = month;
+            
+            // 버튼 스타일 업데이트
+            document.getElementById('btn-july').className = month === 6 
+                ? 'px-4 py-2 mx-2 rounded-lg font-semibold transition-colors bg-blue-500 text-white'
+                : 'px-4 py-2 mx-2 rounded-lg font-semibold transition-colors bg-white text-gray-700 hover:bg-gray-100';
+            
+            document.getElementById('btn-august').className = month === 7
+                ? 'px-4 py-2 mx-2 rounded-lg font-semibold transition-colors bg-blue-500 text-white'
+                : 'px-4 py-2 mx-2 rounded-lg font-semibold transition-colors bg-white text-gray-700 hover:bg-gray-100';
+            
+            renderCalendar();
+            updateStats();
+        }
+
+        // 이벤트 리스너 등록
+        document.getElementById('btn-july').addEventListener('click', () => switchMonth(6));
+        document.getElementById('btn-august').addEventListener('click', () => switchMonth(7));
+
+        // 초기 렌더링
+        renderCalendar();
+        updateStats();
+        updateVacationList();
+    </script>
+</body>
+</html>
 </body>
 </html>
